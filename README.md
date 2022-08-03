@@ -5,6 +5,6 @@
 - AccessKey: AKIAYMJ5UL2BC5LHIAEO
 - SecretLey: jXbMgBAe56NZwnY/RUxTQHRuZSDPWm/7FhS3sYe4t
 
-# Youtube videos:
+# youtube video
 - https://www.youtube.com/watch?v=E0-P978Yqdw&ab_channel=JavaTechie
 - https://www.youtube.com/watch?v=amlQdiJIGpg&ab_channel=TapasJoshi
