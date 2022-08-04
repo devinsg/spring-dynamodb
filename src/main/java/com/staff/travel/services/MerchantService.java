@@ -1,4 +1,4 @@
 package com.staff.travel.services;
 
-public class PersonService {
+public class MerchantService {
 }
