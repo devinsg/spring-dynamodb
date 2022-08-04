@@ -16,13 +16,19 @@ public class MerchantController {
         return "endpoint is running";
     }
 
-    @GetMapping("/{merchantId}")
-    public Merchant getById(@RequestParam(required = false) String merchantId) {
+    @GetMapping("/{id}")
+    public Merchant getById(@PathVariable("id") String merchantId) {
         return merchantRepository.findMerchantById(merchantId);
+    }
+
+    @GetMapping("/list")
+    public Merchant getList() {
+        return merchantRepository.findMerchantById("fa268234-b158-4137-b458-d2c97bcac122");
     }
 
     @PostMapping("/add")
     public Merchant add(@RequestBody final Merchant merchant){
+        System.out.println(merchant.toString());
         return merchantRepository.add(merchant);
     }
 
