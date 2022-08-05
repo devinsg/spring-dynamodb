@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @DynamoDBDocument
 public class Address {
-    @DynamoDBAttribute
+    @DynamoDBAttribute(attributeName = "City")
     private String city;
 
-    @DynamoDBAttribute
+    @DynamoDBAttribute(attributeName = "State")
     private String state;
 
-    @DynamoDBAttribute
-    private long pinCode;
+    @DynamoDBAttribute(attributeName = "PinCode")
+    private String pinCode;
 }

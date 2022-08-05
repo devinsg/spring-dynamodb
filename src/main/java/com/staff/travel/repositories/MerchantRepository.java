@@ -2,6 +2,7 @@ package com.staff.travel.repositories;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.staff.travel.models.Merchant;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class MerchantRepository {
@@ -20,9 +23,17 @@ public class MerchantRepository {
         mapper.save(merchant);
         return merchant;
     }
-
+    
     public Merchant findMerchantById(String merchantId) {
-        return mapper.load(Merchant.class, merchantId);
+        List<Merchant> lstMerchant = mapper.scan(Merchant.class, new DynamoDBScanExpression());
+        return lstMerchant.stream()
+                .filter(item -> item.getMerchantId().equals(merchantId))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Merchant> findAll() {
+        return mapper.scan(Merchant.class, new DynamoDBScanExpression());
     }
 
     public boolean delete(String merchantId) {
@@ -30,7 +41,7 @@ public class MerchantRepository {
             mapper.delete(merchantId);
             return true;
         } catch (Exception ex) {
-            System.out.println(ex.toString());
+            System.out.println("ERROR:" + ex.toString());
             return false;
         }
     }
@@ -40,7 +51,7 @@ public class MerchantRepository {
             mapper.save(merchant, buildExpression(merchant));
             return true;
         } catch (Exception ex) {
-            System.out.println(ex.toString());
+            System.out.println("ERROR:" + ex.toString());
             return false;
         }
     }
@@ -51,5 +62,14 @@ public class MerchantRepository {
         expectedValueMap.put("MerchantId", new ExpectedAttributeValue(new AttributeValue().withS(merchant.getMerchantId())));
         dynamoDBSaveExpression.setExpected(expectedValueMap);
         return dynamoDBSaveExpression;
+    }
+
+    public String update(String merchantId, Merchant merchant) {
+        mapper.save(merchant,
+                new DynamoDBSaveExpression().withExpectedEntry("MerchantId",
+                        new ExpectedAttributeValue(
+                                new AttributeValue().withS(merchantId)
+                        )));
+        return merchantId;
     }
 }
