@@ -1,7 +1,8 @@
 package com.staff.travel.controllers;
 
 import com.staff.travel.models.Merchant;
-import com.staff.travel.repositories.MerchantRepository;
+import com.staff.travel.repositories.IMerchantRepository;
+import com.staff.travel.services.IMerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,10 @@ import java.util.List;
 @RequestMapping("/api/v1/merchant")
 public class MerchantController {
     @Autowired
-    private MerchantRepository repository;
+    private IMerchantRepository repository;
+
+    @Autowired
+    private IMerchantService merchantService;
 
     @GetMapping("/")
     public String getStatus() {

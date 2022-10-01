@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
-public class MerchantRepository {
+public class MerchantRepository implements IMerchantRepository {
     @Autowired
     private DynamoDBMapper mapper;
 
